@@ -1,13 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://cio01a8vlb0e6"]
 
+[ext_resource type="Script" path="res://Player.gd" id="1_d520c"]
 [ext_resource type="SpriteFrames" uid="uid://b1tpwxdpfiqqc" path="res://new_sprite_frames.tres" id="1_nnipo"]
 [ext_resource type="Texture2D" uid="uid://oj0nuw3xeyyw" path="res://Tiles.png" id="2_vh7q4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3uuc"]
 size = Vector2(19, 33)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d8vo4"]
-size = Vector2(385, 20)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b7s8c"]
 texture = ExtResource("2_vh7q4")
@@ -1442,27 +1440,28 @@ sources/0 = SubResource("TileSetAtlasSource_b7s8c")
 [node name="MainLevel" type="Node2D"]
 position = Vector2(78, 62)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_d520c")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("1_nnipo")
-animation = &"Idle"
-frame_progress = 0.139174
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+root_node = NodePath("../..")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="AnimatedSprite2D"]
-input_pickable = true
-
-[node name="RigidBody2D" type="RigidBody2D" parent="AnimatedSprite2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-7.5, 4.5)
 shape = SubResource("RectangleShape2D_x3uuc")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="RigidBody2D" type="RigidBody2D" parent="Player"]
+continuous_cd = 1
+can_sleep = false
+lock_rotation = true
+freeze_mode = 1
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(123.5, 49)
-shape = SubResource("RectangleShape2D_d8vo4")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(-1, -1)
+sprite_frames = ExtResource("1_nnipo")
+animation = &"Idle"
+
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(26, -24)
